@@ -1,23 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import { atom, selector, useRecoilState } from 'recoil';
+import TextIn from './components/TextIn';
+import Counting from './components/Counting';
+
+export const textState = atom({
+  key: 'textState',
+  default: '',
+});
+
+export const countingCh = selector({
+  key: 'countingCh',
+  get: ({ get }) => {
+    const check = get(textState);
+
+    return check.length;
+  },
+});
 
 function App() {
+  const [text, setText] = useRecoilState(textState);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TextIn />
+      <Counting />
     </div>
   );
 }
